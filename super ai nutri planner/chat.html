@@ -1,0 +1,49 @@
+<!-- frontend/chat.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Nutrition Chat</title>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-5">
+        <h1 class="text-3xl font-bold text-center">Nutrition Chatbot</h1>
+        <div class="mt-6">
+            <div id="chatbox" class="border border-gray-300 rounded p-4 h-64 overflow-y-auto">
+                <!-- Chat messages will be displayed here -->
+            </div>
+            <form id="chatForm" class="mt-4">
+                <input type="text" id="userInput" class="border border-gray-300 rounded p-2 w-full" placeholder="Type your question..." required>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Send</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('chatForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userInput = document.getElementById('userInput').value;
+
+            // Display user message
+            const chatbox = document.getElementById('chatbox');
+            chatbox.innerHTML += `<div class="text-right text-blue-600">You: ${userInput}</div>`;
+
+            // Send user input to the server
+            const response = await fetch('http://localhost:5000/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt: userInput }),
+            });
+
+            const data = await response.json();
+            // Display chatbot response
+            chatbox.innerHTML += `<div class="text-left text-gray-600">Bot: ${data.response}</div>`;
+            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
+            document.getElementById('userInput').value = ''; // Clear input
+        });
+    </script>
+</body>
+</html>
