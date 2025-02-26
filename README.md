@@ -6,7 +6,7 @@ This project is to improve the health of people around the world. By understandi
 
 1. Clone the repository:
     ```bash
-   [ git clone https://github.com/username/projectname.git](https://github.com/johnson9398/NUTRITRION-SCIENCE-)
+   (https://github.com/johnson9398/NUTRITRION-SCIENCE-)
     ```
 
 2. Navigate into the project directory:
